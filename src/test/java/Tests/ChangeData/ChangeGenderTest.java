@@ -18,7 +18,7 @@ public class ChangeGenderTest extends BaseTest {
         private PersonalDataWindow personalDataWindow;
 
         @BeforeEach
-        public void beginEachTest() {
+        public void doBeginEachTest() {
             MainPage mainPage = new LoginPage().logIn(user);
             personalDataWindow = mainPage.goToSettingsPage().openPersonalDataWindow();
             personalDataWindow
@@ -38,5 +38,11 @@ public class ChangeGenderTest extends BaseTest {
             Selenide.refresh();
             BaseSettingsPage baseSettingsPageAfterTryingChanges = new BaseSettingsPage();
             Assertions.assertEquals(Gender.FEMALE.getValue(), baseSettingsPageAfterTryingChanges.openPersonalDataWindow().getGender());
+            personalDataWindow
+                    .setGender(Gender.MALE)
+                    .confirmChanges();
+            Selenide.refresh();
+            baseSettingsPageAfterTryingChanges = new BaseSettingsPage();
+            Assertions.assertEquals(Gender.MALE.getValue(), baseSettingsPageAfterTryingChanges.openPersonalDataWindow().getGender());
         }
 }

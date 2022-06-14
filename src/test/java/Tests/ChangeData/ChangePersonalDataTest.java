@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,8 @@ public class ChangePersonalDataTest extends BaseTest {
     private static String NEW_TOWN_OF_RESIDENT;
     private static String NEW_HOMETOWN;
 
-    private static String patternData;
-
     @BeforeEach
-    public void beginEachTest() {
+    public void doBeginEachTest() {
         NEW_GENDER = new RandomValueGenerator<>(Arrays.asList(Gender.MALE, Gender.FEMALE)).generate();
         RandomValueGenerator<String> randomTown = new RandomValueGenerator<>(listOfTown);
         NEW_TOWN_OF_RESIDENT = randomTown.generate();
@@ -59,17 +58,21 @@ public class ChangePersonalDataTest extends BaseTest {
                 .setHometown(NEW_HOMETOWN)
                 .confirmChanges();
         Selenide.refresh();
-        BaseSettingsPage baseSettingsPageAfterTryingChanges = new BaseSettingsPage();
-
-        personalDataWindow = baseSettingsPageAfterTryingChanges.openPersonalDataWindow();
+        personalDataWindow = new BaseSettingsPage().openPersonalDataWindow();
         Assertions.assertEquals(NEW_FIRST_NAME, personalDataWindow.getFirstName());
         Assertions.assertEquals(NEW_LAST_NAME, personalDataWindow.getLastName());
         Assertions.assertEquals(NEW_DAY_OF_BIRTH, personalDataWindow.getDayOfBirth());
         Assertions.assertEquals(NEW_MONTH_OF_BIRTH, personalDataWindow.getMonthOfBirth());
         Assertions.assertEquals(NEW_YEAR_OF_BIRTH, personalDataWindow.getYearOfBirth());
         Assertions.assertEquals(NEW_GENDER.getValue(), personalDataWindow.getGender());
-        Assertions.assertEquals(NEW_HOMETOWN, personalDataWindow.getHometown());
-        Assertions.assertEquals(NEW_TOWN_OF_RESIDENT, personalDataWindow.getTownOfResident());
+        Assertions.assertTrue(personalDataWindow.getHometown().contains(NEW_HOMETOWN));
+        Assertions.assertTrue(personalDataWindow.getTownOfResident().contains(NEW_TOWN_OF_RESIDENT));
+    }
 
+    @AfterEach
+    public void doAfterEachTest() {
+        personalDataWindow
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName());
     }
 }

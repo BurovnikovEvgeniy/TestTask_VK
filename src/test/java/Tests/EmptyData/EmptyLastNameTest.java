@@ -17,10 +17,16 @@ public class EmptyLastNameTest extends BaseTest {
     private static final String emptyValue = "";
 
     @BeforeEach
-    public void beginEachTest() {
+    public void doBeginEachTest() {
         MainPage mainPage = new LoginPage().logIn(user);
         BaseSettingsPage baseSettingsPage = mainPage.goToSettingsPage();
         personalDataWindow = baseSettingsPage.openPersonalDataWindow();
+        personalDataWindow
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .confirmChanges();
+        Selenide.refresh();
+        personalDataWindow = new BaseSettingsPage().openPersonalDataWindow();
     }
 
     @Test

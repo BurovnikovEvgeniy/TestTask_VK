@@ -24,7 +24,7 @@ public class EmptyHometownTest extends BaseTest {
     private PersonalDataWindow personalDataWindow;
 
     @BeforeEach
-    public void beginEachTest() {
+    public void doBeginEachTest() {
         RandomValueGenerator<String> randomOfTown
                 = new RandomValueGenerator<>(new ArrayList<>(Arrays.asList("Курск", "Москва", "г. Кронштадт", "Ульяновск")));
         HOMETOWN = randomOfTown.generate();
