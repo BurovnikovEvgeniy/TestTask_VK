@@ -65,11 +65,11 @@ public class BaseSettingsPage extends BasePage {
                 .contains(dayOfBirth + " " + month + " " + yearOfBirth);
     }
 
-    public boolean checkCityInData(String city) {
+    public boolean checkTownInData(String town) {
         return $(PERSONAL_DATA)
                 .shouldBe(Condition.visible)
                 .getText()
-                .contains(city);
+                .contains(town);
     }
     @Override
     public boolean checkPage() {

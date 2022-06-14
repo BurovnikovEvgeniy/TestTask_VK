@@ -2,7 +2,9 @@ package Tests.ChangeData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +24,7 @@ import Utils.RandomValueGenerator;
 public class ChangePersonalDataTest extends BaseTest {
 
     private static final List<String> listOfTown
-            = new ArrayList<>(Arrays.asList("г. Ломоносов", "г. Курчатов", "г. Грозный", "г. Мурманск"));
+            = new ArrayList<>(Arrays.asList("Ломоносов", "Курчатов", "Грозный", "Мурманск"));
 
     private PersonalDataWindow personalDataWindow;
 
@@ -37,9 +39,12 @@ public class ChangePersonalDataTest extends BaseTest {
     private static final String OLD_YEAR_OF_BIRTH = "2001";
     private static String NEW_TOWN_OF_RESIDENT;
     private static String NEW_HOMETOWN;
+    private static final Map<Gender, String> lexicalGenderEquivalent = new HashMap<>();
 
     @BeforeEach
-    public void doBeginEachTest() {
+    public void preparePageAndData() {
+        lexicalGenderEquivalent.put(Gender.MALE, "родился");
+        lexicalGenderEquivalent.put(Gender.FEMALE, "родилась");
         NEW_GENDER = new RandomValueGenerator<>(Arrays.asList(Gender.MALE, Gender.FEMALE)).generate();
         RandomValueGenerator<String> randomTown = new RandomValueGenerator<>(listOfTown);
         NEW_TOWN_OF_RESIDENT = randomTown.generate();
@@ -70,7 +75,12 @@ public class ChangePersonalDataTest extends BaseTest {
                 .setHometown(NEW_HOMETOWN)
                 .confirmChanges();
         Selenide.refresh();
-        personalDataWindow = new BaseSettingsPage().openPersonalDataWindow();
+        BaseSettingsPage baseSettingsPage = new BaseSettingsPage();
+        Assertions.assertTrue(baseSettingsPage.checkDateOfBirth(NEW_DAY_OF_BIRTH, NEW_MONTH_OF_BIRTH, NEW_YEAR_OF_BIRTH));
+        Assertions.assertTrue(baseSettingsPage.checkTownInData(NEW_HOMETOWN));
+        Assertions.assertTrue(baseSettingsPage.checkTownInData(NEW_TOWN_OF_RESIDENT));
+        Assertions.assertTrue(baseSettingsPage.checkGender(NEW_GENDER, lexicalGenderEquivalent));
+        personalDataWindow = baseSettingsPage.openPersonalDataWindow();
         Assertions.assertEquals(NEW_FIRST_NAME, personalDataWindow.getFirstName());
         Assertions.assertEquals(NEW_LAST_NAME, personalDataWindow.getLastName());
         Assertions.assertEquals(NEW_DAY_OF_BIRTH, personalDataWindow.getDayOfBirth());

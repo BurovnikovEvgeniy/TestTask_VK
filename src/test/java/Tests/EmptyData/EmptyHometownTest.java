@@ -25,7 +25,7 @@ public class EmptyHometownTest extends BaseTest {
     @BeforeEach
     public void preparePageAndData() {
         RandomValueGenerator<String> randomOfTown
-                = new RandomValueGenerator<>(new ArrayList<>(Arrays.asList("Курск", "Москва", "г. Кронштадт", "Ульяновск")));
+                = new RandomValueGenerator<>(new ArrayList<>(Arrays.asList("Курск", "Москва", "Кронштадт", "Ульяновск")));
         HOMETOWN = randomOfTown.generate();
         TOWN_OF_RESIDENCE = randomOfTown.generate();
         MainPage mainPage = new LoginPage().logIn(user);
