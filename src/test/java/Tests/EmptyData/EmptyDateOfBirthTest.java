@@ -23,7 +23,7 @@ public class EmptyDateOfBirthTest extends BaseTest {
 
 
     @BeforeEach
-    public void doBeginEachTest() {
+    public void preparePageAndData() {
         DATE_OF_BIRTH.set(2001, Calendar.SEPTEMBER, 12);
         MainPage mainPage = new LoginPage().logIn(user);
         personalDataWindow = mainPage.goToSettingsPage().openPersonalDataWindow();

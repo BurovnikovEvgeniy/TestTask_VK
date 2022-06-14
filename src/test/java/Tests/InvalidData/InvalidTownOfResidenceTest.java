@@ -24,7 +24,7 @@ public class InvalidTownOfResidenceTest extends BaseTest {
     private PersonalDataWindow personalDataWindow;
 
     @BeforeEach
-    public void beginEachTest() {
+    public void preparePageAndData() {
         randomOfInvalidResidentTown
                 = new RandomValueGenerator<>(new ArrayList<>(Arrays.asList("", RandomStringGenerator.generateString(lengthRandomString))));
         MainPage mainPage = new LoginPage().logIn(user);

@@ -30,8 +30,11 @@ public class ChangePersonalDataTest extends BaseTest {
     private static final String NEW_LAST_NAME = "Буравников";
     private static Gender NEW_GENDER;
     private static final String NEW_DAY_OF_BIRTH = "5";
+    private static final String OLD_DAY_OF_BIRTH = "12";
     private static final String NEW_MONTH_OF_BIRTH = "11";
+    private static final String OLD_MONTH_OF_BIRTH = "9";
     private static final String NEW_YEAR_OF_BIRTH = "2005";
+    private static final String OLD_YEAR_OF_BIRTH = "2001";
     private static String NEW_TOWN_OF_RESIDENT;
     private static String NEW_HOMETOWN;
 
@@ -43,6 +46,15 @@ public class ChangePersonalDataTest extends BaseTest {
         NEW_HOMETOWN = randomTown.generate();
         MainPage mainPage = new LoginPage().logIn(user);
         personalDataWindow = mainPage.goToSettingsPage().openPersonalDataWindow();
+        personalDataWindow
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setDayOfBirth(OLD_DAY_OF_BIRTH)
+                .setMonthOfBirth(OLD_MONTH_OF_BIRTH)
+                .setYearOfBirth(OLD_YEAR_OF_BIRTH)
+                .confirmChanges();
+        Selenide.refresh();
+        personalDataWindow = new BaseSettingsPage().openPersonalDataWindow();
     }
 
     @Test
@@ -70,7 +82,7 @@ public class ChangePersonalDataTest extends BaseTest {
     }
 
     @AfterEach
-    public void doAfterEachTest() {
+    public void cancelChangesFirstAndLastName() {
         personalDataWindow
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName());

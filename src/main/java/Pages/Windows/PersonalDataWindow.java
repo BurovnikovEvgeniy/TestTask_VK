@@ -25,7 +25,6 @@ public class PersonalDataWindow {
     private static final By SELECTED_DAY = new By.ByXPath("//*[contains(@id, \"field_bday\")]//*[contains(@selected, \"selected\")]");
     private static final By SELECTED_MONTH = new By.ByXPath("//*[contains(@id, \"field_bmonth\")]//*[contains(@selected, \"selected\")]");
     private static final By SELECTED_YEAR = new By.ByXPath("//*[contains(@id, \"field_byear\")]//*[contains(@selected, \"selected\")]");
-
     private static final By CITY_OF_RESIDENCE_FIELD = new By.ById("field_citySugg_SearchInput");
     private static final By HOMETOWN_FIELD = new By.ById("field_cityBSugg_SearchInput");
     private static final By LIST_OF_TOWN = new By.ByXPath("//*[contains(@class, \"suggest_li\")]//*[contains(@class, \"ellip\")]");

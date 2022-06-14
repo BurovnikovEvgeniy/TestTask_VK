@@ -18,7 +18,7 @@ public class ChangeGenderTest extends BaseTest {
         private PersonalDataWindow personalDataWindow;
 
         @BeforeEach
-        public void doBeginEachTest() {
+        public void preparePageAndData() {
             MainPage mainPage = new LoginPage().logIn(user);
             personalDataWindow = mainPage.goToSettingsPage().openPersonalDataWindow();
             personalDataWindow

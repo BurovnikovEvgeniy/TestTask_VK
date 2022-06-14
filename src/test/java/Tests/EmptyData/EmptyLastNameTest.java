@@ -17,7 +17,7 @@ public class EmptyLastNameTest extends BaseTest {
     private static final String emptyValue = "";
 
     @BeforeEach
-    public void doBeginEachTest() {
+    public void preparePageAndData() {
         MainPage mainPage = new LoginPage().logIn(user);
         BaseSettingsPage baseSettingsPage = mainPage.goToSettingsPage();
         personalDataWindow = baseSettingsPage.openPersonalDataWindow();
@@ -35,7 +35,6 @@ public class EmptyLastNameTest extends BaseTest {
         personalDataWindow
                 .setLastName(emptyValue)
                 .confirmChanges();
-        Assertions.assertTrue(personalDataWindow.check());
         Assertions.assertTrue(personalDataWindow.isHaveMessageError());
         personalDataWindow.cancelChanges();
         Selenide.refresh();

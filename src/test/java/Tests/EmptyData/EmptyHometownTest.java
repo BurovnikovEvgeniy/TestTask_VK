@@ -2,7 +2,6 @@ package Tests.EmptyData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,7 @@ public class EmptyHometownTest extends BaseTest {
     private PersonalDataWindow personalDataWindow;
 
     @BeforeEach
-    public void doBeginEachTest() {
+    public void preparePageAndData() {
         RandomValueGenerator<String> randomOfTown
                 = new RandomValueGenerator<>(new ArrayList<>(Arrays.asList("Курск", "Москва", "г. Кронштадт", "Ульяновск")));
         HOMETOWN = randomOfTown.generate();

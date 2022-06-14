@@ -11,7 +11,6 @@ import Pages.LoginPage;
 import Pages.MainPage;
 import Pages.Windows.PersonalDataWindow;
 import Tests.BaseTest;
-import Utils.Gender;
 
 public class EmptyFirstNameTest extends BaseTest {
 
@@ -19,7 +18,7 @@ public class EmptyFirstNameTest extends BaseTest {
     private static final String emptyValue = "";
 
     @BeforeEach
-    public void doBeginEachTest() {
+    public void preparePageAndData() {
                 MainPage mainPage = new LoginPage().logIn(user);
         BaseSettingsPage baseSettingsPage = mainPage.goToSettingsPage();
         personalDataWindow = baseSettingsPage.openPersonalDataWindow();
@@ -37,7 +36,6 @@ public class EmptyFirstNameTest extends BaseTest {
         personalDataWindow
                 .setFirstName(emptyValue)
                 .confirmChanges();
-        Assertions.assertTrue(personalDataWindow.check());
         Assertions.assertTrue(personalDataWindow.isHaveMessageError());
         personalDataWindow.cancelChanges();
         Selenide.refresh();
